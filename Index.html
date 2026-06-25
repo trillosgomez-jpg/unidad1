@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diplomado - Sesión 1: Convivencia, Inclusión y Ambientes de Aprendizaje</title>
+    <style>
+        :root {
+            --bg-main: #f4f7f6;
+            --bg-card: #ffffff;
+            --primary: #2c3e50;
+            --secondary: #16a085;
+            --accent: #2980b9;
+            --warning: #f39c12;
+            --danger: #c0392b;
+            --text-main: #34495e;
+            --text-muted: #7f8c8d;
+            --border: #dcdde1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            padding: 20px 10px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .meta-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        /* NAVEGACIÓN POR PESTAÑAS */
+        .tabs-nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .tab-btn {
+            background-color: #e2e8f0;
+            color: var(--text-main);
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            background-color: var(--border);
+        }
+
+        .tab-btn.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        /* CONTENIDO DE PESTAÑAS */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--bg-main);
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin: 15px 0 10px 0;
+        }
+
+        p {
+            margin-bottom: 12px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        /* TIMER GLOBAL */
+        .timer-container {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .timer-display {
+            font-family: monospace;
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+
+        .timer-controls button {
+            background-color: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            margin-left: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .timer-controls button:hover {
+            background-color: rgba(255,255,255,0.4);
+        }
+
+        /* AREAS INTERACTIVAS */
+        .interactive-box {
+            background-color: var(--bg-main);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        /* BLOQUEO DE COPIADO */
+        .no-copy-zone {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* FORMULARIOS Y CAJAS DE TEXTO */
+        .form-label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            margin-top: 6px;
+            font-size: 0.95rem;
+            background-color: #ffffff;
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(41, 128, 185, 0.1);
+        }
+
+        /* NUBE DE PALABRAS INTERACTIVA */
+        .word-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: #2c3e50;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .word-item {
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .word-item:hover {
+            transform: scale(1.15);
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .word-item.selected {
+            background-color: var(--secondary);
+            color: white !important;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(22, 160, 133, 0.5);
+        }
+
+        .word-1 { font-size: 1.8rem; color: #e74c3c; font-weight: bold; }
+        .word-2 { font-size: 1.6rem; color: #2ecc71; font-weight: bold; }
+        .word-3 { font-size: 1.4rem; color: #3498db; }
+        .word-4 { font-size: 1.3rem; color: #f1c40f; }
+
+        .btn-action {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .btn-action:hover {
+            background-color: #117a65;
+        }
+
+        .log-indicator {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            font-weight: bold;
+            margin-top: 5px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>🎓 Diplomado Docente: Convivencia, Inclusión y Ambientes de Aprendizaje</h1>
+            <p>Unidad 1 - Sesión 1: Construcción de ambientes seguros, participativos e incluyentes</p>
+            <div class="meta-info">
+                <span><strong>⏱️ Duración Total de la Guía:</strong> 3 horas de desarrollo</span>
+                <span><strong>💻 Modalidad:</strong> Aplicación Práctica Autónomo / Sincrónica</span>
+                <span><strong>🎯 Objetivo:</strong> Consolidar y aplicar los enfoques de clima de aula, inclusión y educación socioemocional explicados por el facilitador.</span>
+            </div>
+        </header>
+
+        <div class="timer-container">
+            <div>
+                <strong>⏱️ Cronómetro de Actividad (Monitoreo Personal):</strong>
+            </div>
+            <div>
+                <span class="timer-display" id="timeDisplay">20:00</span>
+            </div>
+            <div class="timer-controls">
+                <button onclick="toggleTimer()" id="btnPause">Iniciar</button>
+                <button onclick="resetTimer()">Reiniciar</button>
+            </div>
+        </div>
+
+        <div class="tabs-nav">
+            <button class="tab-btn active" onclick="switchMomento(1, 20)">M1: Rompehielo</button>
+            <button class="tab-btn" onclick="switchMomento(2, 20)">M2: Análisis de Video</button>
+            <button class="tab-btn" onclick="switchMomento(3, 30)">M3: Aplicación Conceptual</button>
+            <button class="tab-btn" onclick="switchMomento(4, 35)">M4: Caso Práctico Real</button>
+            <button class="tab-btn" onclick="switchMomento(5, 25)">M5: Debate de Inclusión</button>
+            <button class="tab-btn" onclick="switchMomento(6, 25)">M6: Gestión Emocional</button>
+            <button class="tab-btn" onclick="switchMomento(7, 15)">M7: Envío y Cierre</button>
+        </div>
+
+        <div id="momento1" class="tab-content active">
+            <div class="card">
+                <h2>🤝 Momento 1: Rompehielo e Integración ("Mi mejor profesor")</h2>
+                <p><strong>Tiempo asignado:</strong> 20 minutos</p>
+                
+                <div class="interactive-box">
+                    <p><strong>Reflexión inicial:</strong> Recuerda al mejor profesor que has tenido a lo largo de tu formación. Identifica las tres características principales que hacían única su labor.</p>
+                </div>
+
+                <p><strong>Pregunta problema:</strong> Al examinar esas virtudes, ¿cuántas se asocian estrictamente al dominio de contenidos técnicos de su materia y cuántas pertenecen a su manera de relacionarse, escuchar y validar a las personas?</p>
+                
+                <label class="form-label">✍️ Registra tus respuestas y conclusiones aquí:</label>
+                <textarea id="txtM1" class="form-textarea" placeholder="Escribe aquí las tres características identificadas y tu análisis crítico sobre el impacto de las relaciones pedagógicas frente al conocimiento memorístico..."></textarea>
+                <span id="logM1" class="log-indicator"></span>
+            </div>
+        </div>
+
+        <div id="momento2" class="tab-content">
+            <div class="card">
+                <h2>📹 Momento 2: Análisis Crítico de Entorno</h2>
+                <p><strong>Tiempo asignado:</strong> 20 minutos</p>
+
+                <div class="interactive-box" style="border-left-color: var(--accent);">
+                    <strong>Consigna de evaluación:</strong><br>
+                    A partir de los fragmentos del video expuesto y proyectado en la sesión por el docente, responde con argumentos pedagógicos:
+                </div>
+
+                <label class="form-label">✍️ Después de lo observado en el video, analiza qué sentimientos se generaron, qué dinámicas latentes de exclusión identificas y qué peso específico tuvo el entorno físico o social en el desarrollo de la situación:</label>
+                <textarea id="txtM2" class="form-textarea" placeholder="Consigna aquí tus impresiones detalladas, identificando barreras invisibles en el aula y cómo el contexto moldea las oportunidades de los estudiantes..."></textarea>
+                <span id="logM2" class="log-indicator"></span>
+            </div>
+        </div>
+
+        <div id="momento3" class="tab-content">
+            <div class="card">
+                <h2>📚 Momento 3: Aplicación Conceptual Terrenal</h2>
+                <p><strong>Tiempo asignado:</strong> 30 minutos</p>
+
+                <div class="interactive-box" style="border-left-color: var(--warning);">
+                    <strong>Conexión con la realidad escolar:</strong><br>
+                    Luego de la explicación magistral brindada sobre los ejes de <em>Convivencia Escolar</em>, <em>Clima de Aula</em> y <em>Educación Socioemocional</em>, traslada estos postulados a tu experiencia directa en las aulas.
+                </div>
+
+                <label class="form-label">✍️ Describe un escenario o anécdota real de tu labor docente donde uno de estos tres ejes se haya visto afectado. ¿Cómo se intervino en ese instante y qué estrategias aplicarías de forma diferente ahora con los conceptos explicados?:</label>
+                <textarea id="txtM3" class="form-textarea" placeholder="Vincula la teoría revisada con un caso de tu práctica cotidiana, proponiendo acciones de mejora bajo la óptica de un clima de aula seguro..."></textarea>
+                <span id="logM3" class="log-indicator"></span>
+            </div>
+        </div>
+
+        <div id="momento4" class="tab-content">
+            <div class="card">
+                <h2>🧩 Momento 4: Estudio de Caso Real (Análisis e Intervención Crítica)</h2>
+                <p><strong>Tiempo asignado:</strong> 35 minutes</p>
+
+                <div class="interactive-box no-copy-zone" style="background-color: #fdf2e9; border-left-color: var(--warning); padding: 18px;">
+                    <strong>🚨 Caso Real de Estudio (Inspirado en incidentes de exclusión en entornos mediados por tecnología):</strong><br>
+                    <p style="margin-top: 8px; font-size: 0.95rem; text-align: justify;">
+                        <em>"Durante el desarrollo de un proyecto escolar en un entorno virtual sincrónico y grupos de mensajería institucionales, un estudiante con dificultades de conectividad y diagnóstico de procesamiento de aprendizaje lento es blanco de burlas sistemáticas. Varios compañeros crean hilos de conversación paralelos y stickers usando capturas de pantalla de sus intervenciones para ridiculizarlo de forma anónima, provocando el aislamiento total del alumno, quien decide apagar su cámara, dejar de ingresar a los encuentros y manifestar crisis de ansiedad a su familia."</em>
+                    </p>
+                </div>
+
+                <label class="form-label">1. Diagnóstico: ¿Qué problemas multifactoriales de convivencia y entornos virtuales se evidencian?</label>
+                <textarea id="txtCasoA" class="form-textarea" placeholder="Analiza las faltas, las dinámicas de cyberbullying ocultas y las fallas de control grupal..."></textarea>
+
+                <label class="form-label">2. Impacto Académico: ¿De qué manera esta afectación socioemocional vulnera los procesos de aprendizaje y permanencia del alumno?</label>
+                <textarea id="txtCasoB" class="form-textarea" placeholder="Evalúa las consecuencias en la seguridad psicológica del estudiante y en el rendimiento integral..."></textarea>
+
+                <label class="form-label">3. Protocolo de Acción: ¿Qué medidas correctivas inmediatas y de mediación a mediano plazo debe liderar el cuerpo docente?</label>
+                <textarea id="txtCasoC" class="form-textarea" placeholder="Diseña pasos de intervención con el afectado, el grupo agresor y la articulación con directivos o familias..."></textarea>
+
+                <label class="form-label">4. Prevención Estructural: ¿Qué acuerdos de convivencia explícitos o estrategias pedagógicas implementarías para blindar el aula contra estas conductas?</label>
+                <textarea id="txtCasoD" class="form-textarea" placeholder="Escribe normas claras de alfabetización digital y dinámicas de empatía colectiva aplicables..."></textarea>
+                <span id="logM4" class="log-indicator"></span>
+            </div>
+        </div>
+
+        <div id="momento5" class="tab-content">
+            <div class="card">
+                <h2>⚖️ Momento 5: Diversidad, Inclusión y Equidad en la Práctica</h2>
+                <p><strong>Tiempo asignado:</strong> 25 minutos</p>
+
+                <div class="interactive-box">
+                    <strong>Premisa de análisis y debate teórico:</strong>
+                    <p><em>"Tratar a todos los estudiantes exactamente igual dentro del espacio pedagógico es la máxima muestra de ser un docente inclusivo."</em></p>
+                    
+                    <select id="selectM5" class="form-select" onchange="registrarInclusion()">
+                        <option value="">-- Selecciona tu postura conceptual --</option>
+                        <option value="De acuerdo">Estoy de Acuerdo (Enfoque basado en Igualdad Uniforme)</option>
+                        <option value="En desacuerdo">Estoy en Desacuerdo (Enfoque basado en Equidad y Ajustes Razonables)</option>
+                    </select>
+                </div>
+
+                <label class="form-label">✍️ Justifica y sustenta críticamente tu postura en relación con las Barreras para el Aprendizaje y la Participación (BAP) y el diseño universal de entornos:</label>
+                <textarea id="txtM5" class="form-textarea" placeholder="Argumenta tu respuesta rompiendo la diferencia entre dar a todos lo mismo (igualdad) o dar a cada quien lo que requiere para garantizar el éxito educativo (equidad)..."></textarea>
+                <span id="logM5" class="log-indicator"></span>
+            </div>
+        </div>
+
+        <div id="momento6" class="tab-content">
+            <div class="card">
+                <h2>❤️ Momento 6: Gestión de Competencias Socioemocionales</h2>
+                <p><strong>Tiempo asignado:</strong> 25 minutos</p>
+                <p><strong>Autoevaluación emocional:</strong> ¿Cuál es el estado o emoción predominante que experimentas de forma recurrente durante tus jornadas de enseñanza?</p>
+
+                <div class="interactive-box">
+                    <strong>Elige la opción que mejor describa tu realidad para incorporarla al balance general de tu relatoría:</strong>
+                    <div class="word-cloud">
+                        <span class="word-item word-1" onclick="seleccionarEmocion(this, 'Estrés')">ESTRÉS</span>
+                        <span class="word-item word-2" onclick="seleccionarEmocion(this, 'Alegría')">ALEGRÍA</span>
+                        <span class="word-item word-3" onclick="seleccionarEmocion(this, 'Frustración')">FRUSTRACIÓN</span>
+                        <span class="word-item word-4" onclick="seleccionarEmocion(this, 'Motivación')">MOTIVACIÓN</span>
+                    </div>
+                </div>
+
+                <label class="form-label">✍️ Con base en tu elección, reflexiona sobre cómo impacta esta emoción en tu capacidad de escucha activa, contención empática y autorregulación en momentos complejos del aula:</label>
+                <textarea id="txtM6" class="form-textarea" placeholder="Plantea un análisis de cómo tus propios estados emocionales influyen directa o indirectamente en las respuestas y el clima de tus estudiantes..."></textarea>
+                <span id="logM6" class="log-indicator"></span>
+            </div>
+        </div>
+
+        <div id="momento7" class="tab-content">
+            <div class="card">
+                <h2>🏁 Momento 7: Cierre Consolidado y Compilación de Evidencias</h2>
+                <p><strong>Tiempo asignado:</strong> 15 minutos</p>
+                
+                <label class="form-label">Rutina de Pensamiento de Síntesis: Completa de forma estructurada la siguiente idea: <em>"Hoy comprendí que la convivencia escolar..."</em></label>
+                <textarea id="txtM7" class="form-textarea" placeholder="Sintetiza la transformación o reafirmación de tu perspectiva pedagógica tras concluir el estudio de esta sesión..."></textarea>
+
+                <div class="card" style="margin-top: 25px; background-color: #f8fafc; border-top: 4px solid var(--primary);">
+                    <h3>📁 Producto Académico Entregable (Soporte Moodle)</h3>
+                    <p><strong>Consigna de Cierre:</strong> Redacte una propuesta argumentativa fundamentada donde exponga una estrategia pedagógica innovadora para mitigar las Barreras de Aprendizaje (BAP) y potenciar el clima seguro en su institución. (Extensión requerida: entre 300 y 500 palabras).</p>
+                    
+                    <label class="form-label">✍️ Elabora y digita aquí el ensayo/propuesta final que se anexará al portafolio descargable:</label>
+                    <textarea id="txtEvidenciaMoodle" class="form-textarea" style="min-height: 200px;" placeholder="Desarrolla aquí tu texto estructurado completo..."></textarea>
+                    <span id="logM7" class="log-indicator"></span>
+                </div>
+
+                <div style="text-align: center; margin-top: 25px; padding: 25px; background-color: #ebf5fb; border-radius: 8px; border: 1px dashed var(--accent);">
+                    <h3>💾 Consolidar Bitácora y Descargar Entregable</h3>
+                    <p style="font-size: 0.95rem; margin-bottom: 10px;">Una vez completados los cuestionarios e interrogantes de todas las pestañas anteriores, genera el informe oficial en formato Word para su posterior carga en el aula virtual.</p>
+                    <button class="btn-action" onclick="descargarReporteWord()" style="background-color: var(--primary); margin-top: 10px;">
+                        📥 Descargar Portafolio de Respuestas (.doc)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Lógica de Tiempos y Cronómetro
+        let timer;
+        let timeLeft = 1200; 
+        let isRunning = false;
+        let emocionRegistrada = "No seleccionada";
+
+        const timeDisplay = document.getElementById("timeDisplay");
+        const btnPause = document.getElementById("btnPause");
+
+        // Sistema visual indicador de guardado local reactivo en memoria
+        document.querySelectorAll("textarea, select").forEach(elemento => {
+            elemento.addEventListener("input", (e) => {
+                let id = e.target.id;
+                let logElement;
+                
+                if (id.includes("Caso")) logElement = document.getElementById("logM4");
+                else if (id === "txtEvidenciaMoodle") logElement = document.getElementById("logM7");
+                else logElement = document.getElementById("log" + id.replace("txt", "").replace("select", ""));
+                
+                if (logElement) {
+                    logElement.innerText = "✏️ Entrada registrada y retenida en memoria...";
+                    setTimeout(() => { logElement.innerText = "✅ Listo para compilar."; }, 600);
+                }
+            });
+        });
+
+        function updateTimerDisplay() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            timeDisplay.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function toggleTimer() {
+            if (isRunning) {
+                clearInterval(timer);
+                btnPause.innerText = "Iniciar";
+                isRunning = false;
+            } else {
+                isRunning = true;
+                btnPause.innerText = "Pausar";
+                timer = setInterval(() => {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timer);
+                        alert("Tiempo asignado al módulo finalizado.");
+                        isRunning = false;
+                        btnPause.innerText = "Iniciar";
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            isRunning = false;
+            btnPause.innerText = "Iniciar";
+            const activeTab = document.querySelector(".tab-btn.active");
+            if (activeTab.innerText.includes("M1") || activeTab.innerText.includes("M2")) timeLeft = 1200;
+            else if (activeTab.innerText.includes("M3")) timeLeft = 1800;
+            else if (activeTab.innerText.includes("M4")) timeLeft = 2100;
+            else if (activeTab.innerText.includes("M5") || activeTab.innerText.includes("M6")) timeLeft = 1500;
+            else timeLeft = 900;
+            updateTimerDisplay();
+        }
+
+        function switchMomento(num, min) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`momento${num}`).classList.add('active');
+            event.currentTarget.classList.add('active');
+
+            clearInterval(timer);
+            isRunning = false;
+            btnPause.innerText = "Iniciar";
+            timeLeft = min * 60;
+            updateTimerDisplay();
+        }
+
+        function registrarInclusion() {
+            const log = document.getElementById("logM5");
+            if(log) log.innerText = "✅ Postura de inclusión guardada.";
+        }
+
+        function seleccionarEmocion(elemento, valor) {
+            document.querySelectorAll('.word-item').forEach(item => item.classList.remove('selected'));
+            elemento.classList.add('selected');
+            emocionRegistrada = valor;
+            const log = document.getElementById("logM6");
+            if(log) log.innerText = "✅ Reflejo emocional enlazado al reporte.";
+        }
+
+        // GENERADOR Y EXPORTADOR DIRECTO A MICROSOFT WORD (.DOC)
+        function descargarReporteWord() {
+            // Extracción de datos en tiempo real de los campos interactivos
+            const r1 = document.getElementById("txtM1").value || "(Sin desarrollo en la guía)";
+            const r2 = document.getElementById("txtM2").value || "(Sin desarrollo en la guía)";
+            const r3 = document.getElementById("txtM3").value || "(Sin desarrollo en la guía)";
+            
+            const cA = document.getElementById("txtCasoA").value || "(Sin desarrollo en la guía)";
+            const cB = document.getElementById("txtCasoB").value || "(Sin desarrollo en la guía)";
+            const cC = document.getElementById("txtCasoC").value || "(Sin desarrollo en la guía)";
+            const dD = document.getElementById("txtCasoD").value || "(Sin desarrollo en la guía)";
+            
+            const posturaM5 = document.getElementById("selectM5").value || "No especificada";
+            const r5 = document.getElementById("txtM5").value || "(Sin desarrollo en la guía)";
+            const r6 = document.getElementById("txtM6").value || "(Sin desarrollo en la guía)";
+            const r7 = document.getElementById("txtM7").value || "(Sin desarrollo en la guía)";
+            const rEvidencia = document.getElementById("txtEvidenciaMoodle").value || "(Sin desarrollo en la guía)";
+
+            // Compilación estructurada con marcado XML interpretado nativamente por MS Word
+            const documentoHtml = `
+            <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+            <head>
+                <meta charset='utf-8'>
+                <title>Evidencias de Trabajo Autónomo - Sesión 1</title>
+                <style>
+                    body { font-family: 'Arial', sans-serif; color: #2c3e50; line-height: 1.6; }
+                    h1 { color: #16a085; font-size: 20pt; text-align: center; border-bottom: 2px solid #16a085; padding-bottom: 6px; }
+                    h2 { color: #2c3e50; font-size: 13pt; margin-top: 25px; background-color: #f4f7f6; padding: 6px; border-left: 5px solid #16a085; }
+                    .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; }
+                    .meta-table td { border: 1px solid #dcdde1; padding: 10px; font-size: 10pt; background-color: #fafafa; }
+                    .response-container { padding: 10px; font-size: 11pt; color: #34495e; background-color: #ffffff; text-align: justify; }
+                    .case-quote { font-style: italic; background-color: #fef9e7; padding: 10px; border: 1px solid #f39c12; margin-bottom: 10px; font-size: 10pt; }
+                    .field-title { font-weight: bold; color: #2980b9; margin-top: 12px; display: block; }
+                    .footer-block { font-size: 9pt; color: #7f8c8d; text-align: center; margin-top: 45px; border-top: 1px dashed #dcdde1; padding-top: 12px; }
+                </style>
+            </head>
+            <body>
+                <h1>Portafolio de Respuestas y Producción Académica</h1>
+                
+                <table class='meta-table'>
+                    <tr>
+                        <td><strong>Diplomado:</strong> Convivencia Escolar, Inclusión y Ambientes de Aprendizaje</td>
+                        <td><strong>Entregable:</strong> Memoria Consolidada - Unidad 1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fecha de Consolidación:</strong> ${new Date().toLocaleDateString('es-CO')}</td>
+                        <td><strong>Tipo de Recurso:</strong> Aplicación Post-Clase Profesional</td>
+                    </tr>
+                </table>
+
+                <h2>Momento 1: Rompehielo e Integración ("Mi mejor profesor")</h2>
+                <div class='response-container'>
+                    <p>${r1.replace(/\n/g, '<br>')}</p>
+                </div>
+
+                <h2>Momento 2: Análisis Crítico de Entorno (Post-Video)</h2>
+                <div class='response-container'>
+                    <p>${r2.replace(/\n/g, '<br>')}</p>
+                </div>
+
+                <h2>Momento 3: Aplicación Conceptual Terrenal</h2>
+                <div class='response-container'>
+                    <p>${r3.replace(/\n/g, '<br>')}</p>
+                </div>
+
+                <h2>Momento 4: Estudio de Caso Real (Exclusión Digital y Convivencia)</h2>
+                <div class='response-container'>
+                    <div class='case-quote'>
+                        <strong>Contexto del Caso Analizado:</strong> Exclusión, cyberbullying anónimo y afectación psicológica en aulas mediadas por la virtualidad.
+                    </div>
+                    <span class='field-title'>1. Diagnóstico multifactorial de la problemática:</span>
+                    <p>${cA.replace(/\n/g, '<br>')}</p>
+                    
+                    <span class='field-title'>2. Impacto en los procesos de aprendizaje y permanencia:</span>
+                    <p>${cB.replace(/\n/g, '<br>')}</p>
+                    
+                    <span class='field-title'>3. Protocolo de intervención y acciones docentes propuestas:</span>
+                    <p>${cC.replace(/\n/g, '<br>')}</p>
+                    
+                    <span class='field-title'>4. Estrategia de prevención estructural en el aula:</span>
+                    <p>${dD.replace(/\n/g, '<br>')}</p>
+                </div>
+
+                <h2>Momento 5: Diversidad, Inclusión y Equidad en la Práctica</h2>
+                <div class='response-container'>
+                    <p><strong>Postura Conceptual Seleccionada:</strong> ${posturaM5}</p>
+                    <span class='field-title'>Sustentación teórica frente a las Barreras (BAP):</span>
+                    <p>${r5.replace(/\n/g, '<br>')}</p>
+                </div>
+
+                <h2>Momento 6: Gestión de Competencias Socioemocionales</h2>
+                <div class='response-container'>
+                    <p><strong>Autoevaluación Emocional del Docente:</strong> Enfoque recurrente en: ${emocionRegistrada.toUpperCase()}</p>
+                    <span class='field-title'>Análisis de impacto en la autorregulación y empatía áulica:</span>
+                    <p>${r6.replace(/\n/g, '<br>')}</p>
+                </div>
+
+                <h2>Momento 7: Cierre y Síntesis Metacognitiva</h2>
+                <div class='response-container'>
+                    <span class='field-title'>Comprensión de Cierre ("Hoy comprendí que la convivencia escolar..."):</span>
+                    <p>${r7.replace(/\n/g, '<br>')}</p>
+                </div>
+
+                <h2>📁 Propuesta Académica Estructurada (Evidencia para Moodle)</h2>
+                <div class='response-container' style='background-color: #fcfcfc; border: 1px solid #2c3e50; padding: 12px;'>
+                    <p>${rEvidencia.replace(/\n/g, '<br>')}</p>
+                </div>
+
+                <div class='footer-block'>
+                    Documento de evidencias del estudiante compilado de forma automatizada.
+                </div>
+            </body>
+            </html>`;
+
+            // Creación y descarga del archivo binario ejecutable en Word
+            const blob = new Blob(['\ufeff' + documentoHtml], { type: 'application/msword;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", "Bitacora_Evidencias_Sesion1.doc");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
